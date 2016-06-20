@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Coruna Event Handler</string>
+    <string name="title_activity_info">InfoActivity</string>
+    <string name="accesibility_event_image">Imagen del Evento</string>
+    <string name="lorem_ipsum">Lorem ipsum generate inpulsum transvenium carelle</string>
+    <string name="imagen_del_evento">Imagen del Evento</string>
+    <string name="como_llegar">Como llegar:</string>
+    <string name="info_share">Compartir</string>
+    <string name="compartir_en_facebook">Compartir en Facebook</string>
+    <string name="facebook_app_id">584828018360830</string>
+</resources>
