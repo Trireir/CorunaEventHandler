@@ -26,7 +26,6 @@ public class TabSelectedListener extends TabLayout.ViewPagerOnTabSelectedListene
 
     public void onTabSelected(TabLayout.Tab tab) {
         super.onTabSelected(tab);
-
         actionBar.setTitle(tabTitles[tab.getPosition()]);
 
     }

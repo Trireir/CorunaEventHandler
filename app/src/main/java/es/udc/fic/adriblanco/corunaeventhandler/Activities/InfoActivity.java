@@ -112,21 +112,22 @@ public class InfoActivity extends AppCompatActivity{
 
 
         TextView infoName = (TextView) findViewById(R.id.infoTitle);
-        infoName.setText(e.getName()+" "+e.getId());
-        toolbar.setTitle(e.getName()+" "+e.getId());
+        infoName.setText(e.getName());
+        toolbar.setTitle(e.getName());
 
         TextView infoDesc = (TextView) findViewById(R.id.infoDescription);
         infoDesc.setText(e.getDesc());
 
         setupMaps();
         setupFABCalendar();
-        setupFacebook();
+        setupTwitter();
+        //setupFacebook();
 
     }
 
     private void setupMaps(){
         final SimpleCustomChromeTabsHelper mCustomTabHelper = new SimpleCustomChromeTabsHelper(this);
-        final String url = "https://www.google.es/maps?q=loc:@"+e.getLon()+","+e.getLat();
+        final String url = "http://maps.google.com/?q="+e.getPlace()+" A Coruña";
 
         CardView cvMaps = (CardView) findViewById(R.id.maps_card);
         cvMaps.setOnClickListener(new View.OnClickListener(){
@@ -153,7 +154,21 @@ public class InfoActivity extends AppCompatActivity{
         });
     }
 
-    private void setupFacebook(){
+    private void setupTwitter(){
+        CardView cvTwitter = (CardView) findViewById(R.id.twitter_card);
+        cvTwitter.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Compartir en Twitter sin App", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+                String tweetUrl = "https://twitter.com/intent/tweet?text="+e.getName()+" en Coruña Event Handler";
+                Uri uri = Uri.parse(tweetUrl);
+                startActivity(new Intent(Intent.ACTION_VIEW, uri));
+            }
+        });
+    }
+
+    /*private void setupFacebook(){
         //FacebookSdk.sdkInitialize(getApplicationContext());
         //Log.d(":D", FacebookSdk.getApplicationSignature(getApplicationContext()));
 
@@ -166,7 +181,7 @@ public class InfoActivity extends AppCompatActivity{
             }
         });
     }
-
+*/
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -232,7 +247,8 @@ public class InfoActivity extends AppCompatActivity{
         long startMillis = 0;
 
         Calendar beginTime = Calendar.getInstance();
-        beginTime.set(e.getYear(), e.getMonth()-1, e.getDay());
+        //beginTime.set(e.getYear(), e.getMonth()-1, e.getDay());
+        beginTime.setTime(e.getDate());
         startMillis = beginTime.getTimeInMillis();
 
         ContentResolver cr = getContentResolver();

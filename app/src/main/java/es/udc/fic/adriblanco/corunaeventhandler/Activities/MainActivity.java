@@ -23,13 +23,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        /*if (savedInstanceState == null) {
-            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            PrincipalFragment fragment = new PrincipalFragment();
-            transaction.replace(R.id.sample_content_fragment, fragment);
-            transaction.commit();
-        }*/
         setupToolbar();
         setupTablayout();
     }
@@ -53,20 +46,6 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.setOnTabSelectedListener(new TabSelectedListener(ab, viewPager));
         this.tabLayout = tabLayout;
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        Log.d("ONSAVEINSTANCESTATE",this.toString());
-        outState.putInt(POSITION, tabLayout.getSelectedTabPosition());
-    }
-
-    @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-        Log.d("ONRESTOREINSTANCESTATE", this.toString());
-        viewPager.setCurrentItem(savedInstanceState.getInt(POSITION));
     }
 
 }

@@ -8,4 +8,5 @@
     <string name="info_share">Compartir</string>
     <string name="compartir_en_facebook">Compartir en Facebook</string>
     <string name="facebook_app_id">584828018360830</string>
+    <string name="compartir_en_twitter">Compartir en Twitter</string>
 </resources>

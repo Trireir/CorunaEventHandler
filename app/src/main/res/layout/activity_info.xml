@@ -109,7 +109,7 @@
                         android:layout_height="40dp"
                         android:id="@+id/maps_photo"
                         android:layout_gravity="left"
-                        android:src="@drawable/facebook"
+                        android:src="@drawable/gmaps"
                         android:padding="3dp"
                         android:contentDescription="@string/imagen_del_evento" />
                     <TextView
@@ -129,6 +129,44 @@
             </android.support.v7.widget.CardView>
 
             <android.support.v7.widget.CardView
+                android:id="@+id/twitter_card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:foreground="?android:attr/selectableItemBackground"
+                app:cardElevation="5dp"
+                app:cardUseCompatPadding="true">
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:id="@+id/twitter_photo"
+                        android:layout_gravity="left"
+                        android:src="@drawable/twitter"
+                        android:padding="3dp"
+                        android:contentDescription="@string/imagen_del_evento" />
+                    <TextView
+                        android:id="@+id/share_twitter"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="40dp"
+                        android:layout_marginRight="15dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:textSize="15sp"
+                        android:textColor="@color/my_divider"
+                        android:text="@string/compartir_en_twitter"
+                        android:layout_gravity="center_vertical" />
+                </FrameLayout>
+
+            </android.support.v7.widget.CardView>
+
+    <!--        <android.support.v7.widget.CardView
                 android:id="@+id/facebook_card"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -164,7 +202,7 @@
                         android:layout_gravity="center_vertical" />
                 </FrameLayout>
 
-            </android.support.v7.widget.CardView>
+            </android.support.v7.widget.CardView>-->
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 

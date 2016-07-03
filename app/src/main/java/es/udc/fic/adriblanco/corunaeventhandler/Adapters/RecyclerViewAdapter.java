@@ -34,7 +34,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public int getItemCount() {
-        return eventos.size();
+        return (eventos == null) ? 0 : eventos.size();
     }
 
     @Override
@@ -51,8 +51,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         Picasso.with(eventViewHolder.itemView.getContext()).load(e.getImage()).into(eventViewHolder.eventPhoto);
         eventViewHolder.eventName.setText(e.getName());
         eventViewHolder.eventPlace.setText(e.getPlace());
-        eventViewHolder.eventDate.setText(e.getDate());
-        eventViewHolder.eventPrice.setText(e.getPrice()+"€");
+        eventViewHolder.eventDate.setText(e.stringDate());
+        eventViewHolder.eventPrice.setText(e.getPrice());
         eventViewHolder.setEvento(e);
     }
 
