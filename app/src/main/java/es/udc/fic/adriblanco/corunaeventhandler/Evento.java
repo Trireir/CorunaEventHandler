@@ -34,7 +34,7 @@ public class Evento implements Parcelable, Comparable<Evento>{
     public Evento(){
 
     }
-    // Section, Name, Desc, Year, Month, Day, Price,  image, Place, lon, lat
+    // Section, Name, Desc, da, Price,  image, Place, lon, lat
     public Evento(String s, String n, String d, String da, String pr, String i, String p){
         section = s;
         name = n;
@@ -144,7 +144,6 @@ public class Evento implements Parcelable, Comparable<Evento>{
     }
 
     public String stringDate(){
-        Log.d("STRING DATE", (date != null) ? new SimpleDateFormat(DATE_FORMAT).format(date) : "");
         return (date != null) ? new SimpleDateFormat(DATE_FORMAT).format(date) : "";
     }
 

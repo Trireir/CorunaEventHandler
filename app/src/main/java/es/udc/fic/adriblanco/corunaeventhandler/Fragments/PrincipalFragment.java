@@ -1,7 +1,10 @@
 package es.udc.fic.adriblanco.corunaeventhandler.Fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -16,6 +19,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import com.amazonaws.auth.CognitoCachingCredentialsProvider;
@@ -41,6 +45,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import es.udc.fic.adriblanco.corunaeventhandler.Activities.AddEvent;
+import es.udc.fic.adriblanco.corunaeventhandler.Activities.InfoActivity;
 import es.udc.fic.adriblanco.corunaeventhandler.Adapters.RecyclerViewAdapter;
 import es.udc.fic.adriblanco.corunaeventhandler.Evento;
 import es.udc.fic.adriblanco.corunaeventhandler.MeteEventos;
@@ -73,7 +79,7 @@ Log.d(c, "newInstance");
         super.onCreate(savedInstanceState);
         category = getArguments().getString("category");
         initAWS();
-        dataSet = initData();
+        initData();
     }
 
     @Override
@@ -85,7 +91,9 @@ Log.d(c, "newInstance");
         else fabAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new saveEvents().execute();
+
+                Intent intent = new Intent(v.getContext(), AddEvent.class);
+                v.getContext().startActivity(intent);
                 Snackbar.make(v, "Añade tus propios eventos", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
@@ -140,7 +148,7 @@ Log.d(c, "newInstance");
         mapper = new DynamoDBMapper(ddbClient);
     }
 
-    private List<Evento> initData(){
+    private void initData(){
         if (category.equals("Principal")){
             dataSet = new ArrayList<>();
 
@@ -152,18 +160,16 @@ Log.d(c, "newInstance");
                 dataSet.add(e);
             }
         }else{
-            try {
-                dataSet = (List<Evento>) new getEvents().execute().get();
-                dataSet = new ArrayList<Evento>(dataSet);
-                Collections.sort(dataSet);
-            }catch( Exception ex){
-                ex.printStackTrace();
-                Snackbar.make(getView(), "Error en la conexión a internet", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-
+            if (isConnectedToInternet()) {
+                try {
+                    new getEvents().execute();
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }else{
+                Toast.makeText(getContext(), "Fallo en la conexión a internet", Toast.LENGTH_SHORT).show();
             }
         }
-        return dataSet;
     }
 
     public void refreshPrincipalData(){
@@ -186,34 +192,29 @@ Log.d(c, "newInstance");
 
     }
 
-    private class saveEvents extends AsyncTask {
+    public void setData(List<Evento> data){
+        dataSet = new ArrayList<Evento>(data);
+        Collections.sort(dataSet);
+        final FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+        ft.detach(this);
+        ft.attach(this);
+        ft.commit();
+    }
 
-        @Override
-        protected Object doInBackground(Object[] params) {
-            CognitoCachingCredentialsProvider credentialsProvider = new CognitoCachingCredentialsProvider(
-                    getContext(),
-                    "us-east-1:133fc07d-d22d-4156-a2e9-03e519872397",   // Identity Pool ID
-                    Regions.US_EAST_1                                   // Region
-            );
-            AmazonDynamoDBClient ddbClient = new AmazonDynamoDBClient(credentialsProvider);
-            DynamoDBMapper mapper = new DynamoDBMapper(ddbClient);
-            mapper.save(MeteEventos.e1());
-            mapper.save(MeteEventos.e2());
-            mapper.save(MeteEventos.e3());
-            mapper.save(MeteEventos.e4());
-            mapper.save(MeteEventos.e5());
-            mapper.save(MeteEventos.e6());
-            mapper.save(MeteEventos.e7());
-            mapper.save(MeteEventos.e8());
-            mapper.save(MeteEventos.e9());
-            mapper.save(MeteEventos.e10());
-            mapper.save(MeteEventos.e11());
-            mapper.save(MeteEventos.e12());
-            mapper.save(MeteEventos.e13());
-            mapper.save(MeteEventos.e14());
-            mapper.save(MeteEventos.e15());
-            return null;
+    public boolean isConnectedToInternet(){
+        ConnectivityManager connectivity = (ConnectivityManager)getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (connectivity != null)
+        {
+            NetworkInfo[] info = connectivity.getAllNetworkInfo();
+            if (info != null)
+                for (int i = 0; i < info.length; i++)
+                    if (info[i].getState() == NetworkInfo.State.CONNECTED)
+                    {
+                        return true;
+                    }
+
         }
+        return false;
     }
 
     private class getEvents extends AsyncTask {
@@ -221,6 +222,7 @@ Log.d(c, "newInstance");
         @Override
         protected Object doInBackground(Object[] params) {
             Thread.currentThread().setPriority(THREAD_PRIORITY_BACKGROUND + THREAD_PRIORITY_MORE_FAVORABLE);
+
             Map<String, AttributeValue> eav = new HashMap<String, AttributeValue>();
             eav.put(":v1", new AttributeValue().withS(category));
 
@@ -229,7 +231,14 @@ Log.d(c, "newInstance");
                     .withExpressionAttributeValues(eav);
 
             List<Evento> scanResult = mapper.parallelScan(Evento.class, scanExpression, 1);
+
             return scanResult;
+        }
+
+        @Override
+        protected void onPostExecute(Object result){
+            setData((List<Evento>) result);
+
         }
     }
 
