@@ -1,19 +1,16 @@
-# Coruña Event Handler
-![alt tag](http://i.imgur.com/mMqSNX4.jpg)
+# CoruÃ±a Event Handler
+![alt tag](http://i.imgur.com/kg85Ca1.jpg)
 
-[WIP] Aplicación Android que reune los eventos de la ciudad de A Coruña. 
-- Eventos dividos en categorías, como conciertos, eventos infantiles, deportivos...
-- Añade los eventos de tu local para que más gente pueda verlos. 
+AplicaciÃ³n Android que reune los eventos de la ciudad de A CoruÃ±a. 
+- Eventos dividos en categorÃ­as, como conciertos, eventos infantiles, deportivos...
+- AÃ±ade los eventos de tu local para que mÃ¡s gente pueda verlos. 
 - Los eventos se guardan en una base de datos online alojada en Amazon Web Service. 
-- Guarda en favoritos los eventos que más te interesen para no perderlos de vista. Estos no necesitarán de conexión a internet para volver a consultarlos.
+- Guarda en favoritos los eventos que mÃ¡s te interesen para no perderlos de vista. Estos no necesitarÃ¡n de conexiÃ³n a internet para volver a consultarlos.
+- AÃ±ade a tu propio calendario eventos importantes.
+- Localiza donde serÃ¡ el evento.
 
-Descarga la última versión desde aqui:
-https://www.dropbox.com/s/fi5k7rxhnzx5ht9/app-debug.apk?dl=0
-
-## TODO
-- Compartir en facebook sin necesidad de aplicación.
-- Cambios menores en estética.
-- Formulario para añadir eventos propios.
+Descarga la Ãºltima versiÃ³n desde aqui:
+https://www.dropbox.com/s/u9mac0wsypsnbzx/app-debug.apk?dl=0
 
 ## Notas
-- Los eventos añadidos serán revisados por el administrador.
+- Los eventos aÃ±adidos serÃ¡n revisados por el administrador.
